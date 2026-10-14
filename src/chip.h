@@ -17,6 +17,16 @@ class CHIP {
     std::uint16_t PC_COUNT_REG = 0;
     std::uint8_t sp = 0;
     std::uint16_t STACK[16] = {0};
+
+    public void SET_GEN(std::uint8_t v, std::size_t i) GEN_REG[i] = v;
+    public std::uint8_t GET_GEN(std::size_t i) return GEN_REG[i];
+    public void SET_I_REG(std::uint16_t v, std::size_t i) I_REG[i] = v;
+    public std::uint16_t GET_I_REG(std::size_t i) return I_REG[i];
+    public void PUSH_STACK(std::uint16_t v) {
+      STACK[sp] = v;
+      ++sp;
+    }
+
   };
 
   struct DISPLAY {
