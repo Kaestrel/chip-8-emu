@@ -27,52 +27,116 @@ class CHIP {
     public void PRINT_NUMBER(char symbol) {
       switch (symbol) {
         case '0':
-          printf("****\n*  *\n*  *\n*  *\n****");
+          screen[0] = 0xF0;
+          screen[1] = 0x90;
+          screen[2] = 0x90;
+          screen[3] = 0x90;
+          screen[4] = 0xF0;
           break;
         case '1':
-          printf("  * \n ** \n  * \n  * \n ***");
+          screen[0] = 0x20;
+          screen[1] = 0x60;
+          screen[2] = 0x20;
+          screen[3] = 0x20;
+          screen[4] = 0x70;
           break;
         case '2':
-          printf("****\n   *\n****\n*   \n****");
+          screen[0] = 0xF0;
+          screen[1] = 0x10;
+          screen[2] = 0xF0;
+          screen[3] = 0x80;
+          screen[4] = 0xF0;
           break;
         case '3':
-          printf("****\n   *\n****\n   *\n****");
+          screen[0] = 0xF0;
+          screen[1] = 0x10;
+          screen[2] = 0xF0;
+          screen[3] = 0x10;
+          screen[4] = 0xF0;
           break;
         case '4':
-          printf("*  *\n*  *\n****\n   *\n   *");
+          screen[0] = 0x90;
+          screen[1] = 0x90;
+          screen[2] = 0xF0;
+          screen[3] = 0x10;
+          screen[4] = 0x10;
           break;
         case '5':
-          printf("****\n*   \n****\n   *\n****");
+          screen[0] = 0xF0;
+          screen[1] = 0x80;
+          screen[2] = 0xF0;
+          screen[3] = 0x10;
+          screen[4] = 0xF0;
           break;
         case '6':
-          printf("****\n*   \n****\n*  *\n****");
+          screen[0] = 0xF0;
+          screen[1] = 0x80;
+          screen[2] = 0xF0;
+          screen[3] = 0x90;
+          screen[4] = 0xF0;
           break;
         case '7':
-          printf("****\n   *\n  * \n *  \n *  ");
+          screen[0] = 0xF0;
+          screen[1] = 0x10;
+          screen[2] = 0x20;
+          screen[3] = 0x40;
+          screen[4] = 0x40;
           break;
         case '8':
-          printf("****\n*  *\n****\n*  *\n****");
+          screen[0] = 0xF0;
+          screen[1] = 0x90;
+          screen[2] = 0xF0;
+          screen[3] = 0x90;
+          screen[4] = 0xF0;
           break;
         case '9':
-          printf("****\n*  *\n****\n   *\n****");
+          screen[0] = 0xF0;
+          screen[1] = 0x90;
+          screen[2] = 0x90;
+          screen[3] = 0x10;
+          screen[4] = 0xF0;
           break;
         case 'A':
-          printf("****\n*  *\n****\n*  *\n*  *");
+          screen[0] = 0xF0;
+          screen[1] = 0x90;
+          screen[2] = 0xF0;
+          screen[3] = 0x90;
+          screen[4] = 0x90;
           break;
         case 'B':
-          printf("*** \n*  *\n*** \n*  *\n*** ");
+          screen[0] = 0xE0;
+          screen[1] = 0x90;
+          screen[2] = 0xE0;
+          screen[3] = 0x90;
+          screen[4] = 0xE0;
           break;
         case 'C':
-          printf("****\n*   \n*   \n*   \n****");
+          screen[0] = 0xF0;
+          screen[1] = 0x80;
+          screen[2] = 0x80;
+          screen[3] = 0x80;
+          screen[4] = 0xF0;
           break;
         case 'D':
-          printf("*** \n*  *\n*  *\n*  *\n*** ");
+          screen[0] = 0xE0;
+          screen[1] = 0x90;
+          screen[2] = 0x90;
+          screen[3] = 0x90;
+          screen[4] = 0xE0;
           break;
         case 'E':
-          printf("****\n*   \n****\n*   \n****");
+          screen[0] = 0xF0;
+          screen[1] = 0x80;
+          screen[2] = 0xF0;
+          screen[3] = 0x80;
+          screen[4] = 0xF0;
           break;
         case 'F':
-          printf("****\n*   \n****\n*   \n*   ");
+          screen[0] = 0xF0;
+          screen[1] = 0x80;
+          screen[2] = 0xF0;
+          screen[3] = 0x80;
+          screen[4] = 0x80;
           break;
 
       }
