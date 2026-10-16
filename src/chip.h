@@ -26,6 +26,12 @@ class CHIP {
       STACK[sp] = v;
       ++sp;
     }
+    public void POP_STACK() {
+      --sp;
+    }
+    public START_TIMER() {
+      
+    }
 
   };
 
