@@ -114,15 +114,21 @@ void Chip::execute (std::uint16_t instruction) {
         else V[0xF] = 0;
         V[x] += V[y];
     } else if (nibble == 8 && k == 5) {
-        V[x] -= V[y];
         if (V[x] > V[y]) V[0xF] = 1;
         else V[0xF] = 0;
+        V[x] -= V[y];
     } else if (nibble == 8 && k == 6) {
-        
+        if (((V[x] >> 12) & 0xF) == 1) V[0xF] = 1;
+        else V[0xF] = 0;
+        V[x] /= 2;
     } else if (nibble == 8 && k == 7) {
-
+        if (V[y] > V[x]) V[0xF] = 1;
+        else V[0xF] = 0;
+        V[x] = V[y] - V[x];
     } else if (nibble == 8 && k == 0xE) {
-
+        if ((V[x] & 0xF) == 1) V[0xF] = 1;
+        else V[0xF] = 0;
+        V[x] *= 2;
     }
 
 
