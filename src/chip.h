@@ -25,6 +25,25 @@ class Chip {
   std::uint16_t pc_count = 0;
   std::uint16_t* sp = &S[0];
 
+  std::uint8_t fonts[16][5] = {
+    {0xF0, 0x90, 0x90, 0x90, 0xF0}, // 0
+    {0x20, 0x60, 0x20, 0x20, 0x70}, // 1
+    {0xF0, 0x10, 0xF0, 0x80, 0xF0}, // 2
+    {0xF0, 0x10, 0xF0, 0x10, 0xF0}, // 3
+    {0x90, 0x90, 0xF0, 0x10, 0x10}, // 4
+    {0xF0, 0x80, 0xF0, 0x10, 0xF0}, // 5
+    {0xF0, 0x80, 0xF0, 0x90, 0xF0}, // 6
+    {0xF0, 0x10, 0x20, 0x40, 0x40}, // 7
+    {0xF0, 0x90, 0xF0, 0x90, 0xF0}, // 8
+    {0xF0, 0x90, 0xF0, 0x10, 0xF0}, // 9
+    {0xF0, 0x90, 0xF0, 0x90, 0x90}, // A
+    {0xE0, 0x90, 0xE0, 0x90, 0xE0}, // B
+    {0xF0, 0x80, 0x80, 0x80, 0xF0}, // C
+    {0xE0, 0x90, 0x90, 0x90, 0xE0}, // D
+    {0xF0, 0x80, 0xF0, 0x80, 0xF0}, // E
+    {0xF0, 0x80, 0xF0, 0x80, 0x80}  // F
+  };
+
   //INTERPRETER 
   void set_v (std::uint8_t v, std::size_t i);
   std::uint8_t get_v (std::size_t i);
@@ -34,8 +53,7 @@ class Chip {
   void pop_stack();
   void rtn_from_subroutine();
   void jump_to (std::uint16_t loc);
-  void call_subroutine (std::uint16_t loc);
-  void skip_instruction (std::uint8_t i);
+  void call_subroutine();
   void start_timer (std::uint8_t time);
 
   void test();
@@ -44,26 +62,15 @@ class Chip {
   static constexpr std::size_t width = 64;
   std::uint8_t screen[height][width] = {{0}};
     
-  std::uint16_t addr = 0x000;
-  std::uint8_t nibble = 0x0;
-  std::uint8_t x = 0x00;
-  std::uint8_t y = 0x00;
+  std::uint16_t addr = 0x0000;
+  std::uint8_t nibble = 0x00;
+  std::uint8_t n = 0x0;
+  std::uint8_t x = 0x0;
+  std::uint8_t y = 0x0;
   std::uint8_t kk = 0x00;
-
-
-    void execute(std::uint16_t instruction) {
-      //std::uint8_t mask = 1 << 0;
-      nibble = (instruction);
-      
-      switch (instruction) {
-        case 0x00E0:
-          //for (int i = 0; i < 4; i++) DISPLAY.screen[i] = 0x00;
-          break;
-        case 0x00EE:
-
-          break;
-      }
-    } 
+  std::uint8_t k = 0x0;
+  
+  void execute (std::uint16_t instruction);
 
 };
 

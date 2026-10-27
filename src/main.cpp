@@ -3,6 +3,6 @@
 int main() {
 
   Chip c(4096);
-  c.test();
+  c.execute(0xABCD);
   return 0;
 }
