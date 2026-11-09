@@ -19,14 +19,14 @@ class Chip {
   public:
 
   Chip (std::size_t m);
-  std::uint16_t memory;
+  std::uint16_t memory[0xFFF];
   std::uint16_t memory_begin = 0x200;
   std::uint16_t memory_end = 0xFFF;
   std::uint16_t S[16] = {0};
   std::uint8_t V[16] = {0};
   std::uint16_t I = 0;
-  std::uint8_t sound = 0;
-  std::uint8_t timer = 0;
+  std::uint8_t ST = 0;
+  std::uint8_t DT = 0;
   std::uint16_t pc_count = 0;
   std::uint16_t* sp = &S[0];
 

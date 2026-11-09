@@ -7,7 +7,7 @@ Chip::Chip (std::size_t m) {
   print_to_screen(fonts[2]);
   execute(0x00E0);
   print_to_screen(fonts[15]);
-  execute(0xE19E);
+  execute(0xF00A);
 }
 
 //INTERPRETER
@@ -164,12 +164,45 @@ void Chip::execute (std::uint16_t instruction) {
         srand(time(0));
         V[x] = (rand() % 256) & kk;
     } else if (nibble == 0xD) {
-      print_to_screen(fonts[k]);
+        print_to_screen(fonts[k]);
     } else if (nibble == 0xE && kk == 0x9E) {
-      if (isKeyDown(keys[V[x] & 0xF])) pc_count += 2;
+        if (isKeyDown(keys[V[x] & 0xF])) pc_count += 2;
     } else if (nibble == 0xE && kk == 0xA1) {
-      if (!isKeyDown(keys[V[x] & 0xF])) pc_count += 2;
-    } 
+        if (!isKeyDown(keys[V[x] & 0xF])) pc_count += 2;
+    } else if (nibble == 0xF && kk == 0x07) {
+        V[x] = DT; 
+    } else if (nibble == 0xF && kk == 0x0A) {
+        bool keyPressed = false;
+        int index = 0;
+        while (!keyPressed) {
+          for (int i = 0; i < 15; i++) {
+            if (isKeyDown(keys[i])) {
+              keyPressed = true;
+              index = i;
+              break;
+            }
+          }
+        }
+        V[x] = index;
+    } else if (nibble == 0xF && kk == 0x15) {
+        DT = V[x]; 
+    } else if (nibble == 0xF && kk == 0x18) {
+        ST = V[x];
+    } else if (nibble == 0xF && kk == 0x1E) {
+        I += V[x];
+    } else if (nibble == 0xF && kk == 0x29) {
+        //TODO
+    } else if (nibble == 0xF && kk == 0x33) {
+        //TODO
+    } else if (nibble == 0xF && kk == 0x55) {
+        for (int i = 0; i < 15; i++) {
+          memory[I + i] = V[i];
+        }
+    } else if (nibble == 0xF && kk == 0x65) {
+        for (int i = 0; i < 15; i++) {
+          V[i] = memory[I + i];
+        }
+    }
 
 
 
