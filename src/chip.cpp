@@ -2,6 +2,12 @@
 
 Chip::Chip (std::size_t m) {
   memory = m;
+  print_to_screen(fonts[0]);
+  print_to_screen(fonts[1]);
+  print_to_screen(fonts[2]);
+  execute(0x00E0);
+  print_to_screen(fonts[15]);
+  execute(0xE19E);
 }
 
 //INTERPRETER
@@ -11,14 +17,6 @@ void Chip::set_v (std::uint8_t v, std::size_t i) {
 
 std::uint8_t Chip::get_v (std::size_t i) {
   return V[i];
-}
-
-void Chip::set_i (std::uint16_t v, std::size_t i) {
-  I[i] = v;
-}
-
-std::uint16_t Chip::get_i (std::size_t i) {
-  return I[i];
 }
 
 void Chip::push_stack (std::uint16_t v) {
@@ -50,6 +48,33 @@ void Chip::call_subroutine() {
 void Chip::start_timer (std::uint8_t t) {
   while (t > 0) --t;
 }
+
+void Chip::print_to_screen(std::uint8_t a[5]) {
+  for (int j = 0; j < 5; j++) {
+    
+
+      auto cursor = ((a[j] & 0xF0) >> 4);
+
+      std::cout << '\n';
+      for (int i = 3; i >= 0; i--) {
+        bool on = (cursor >> i) & 1;
+        std::cout << (on ? '*' : ' ');
+      }
+      std::cout << '\n';
+
+  }
+}
+
+bool isKeyDown(KeySym ks) {
+  Display *dpy = XOpenDisplay(":0");
+  char keys_return[32];
+  XQueryKeymap(dpy, keys_return);
+  KeyCode kc2 = XKeysymToKeycode(dpy, ks);
+  bool isPressed = !!(keys_return[kc2 >> 3] & (1 << (kc2 & 7)));
+  XCloseDisplay(dpy);
+  return isPressed;
+}
+
 
 void Chip::test() {
   std::ifstream file ("IBM.ch8", std::ios::binary | std::ios::ate);
@@ -84,7 +109,7 @@ void Chip::execute (std::uint16_t instruction) {
             << "\nk: " << +k;
 
     if (instruction == 0x00E0) {
-      //CLEAR SCREEN
+        std::printf("\033[2J");
     } else if (instruction == 0x00EE) {
         rtn_from_subroutine();
     } else if (nibble == 1) {
@@ -129,7 +154,22 @@ void Chip::execute (std::uint16_t instruction) {
         if ((V[x] & 0xF) == 1) V[0xF] = 1;
         else V[0xF] = 0;
         V[x] *= 2;
-    }
+    } else if (nibble == 0x9) {
+        if (V[x] != V[y]) pc_count += 2;
+    } else if (nibble == 0xA) {
+        I = addr;
+    } else if (nibble == 0xB) {
+        pc_count = addr + V[0];
+    } else if (nibble == 0xC) {
+        srand(time(0));
+        V[x] = (rand() % 256) & kk;
+    } else if (nibble == 0xD) {
+      print_to_screen(fonts[k]);
+    } else if (nibble == 0xE && kk == 0x9E) {
+      if (isKeyDown(keys[V[x] & 0xF])) pc_count += 2;
+    } else if (nibble == 0xE && kk == 0xA1) {
+      if (!isKeyDown(keys[V[x] & 0xF])) pc_count += 2;
+    } 
 
 
 

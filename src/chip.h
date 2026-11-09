@@ -7,6 +7,11 @@
 #include <chrono>
 #include <fstream>
 #include <iostream>
+#include <random>
+#include <ctime>
+#include <bitset>
+#include <X11/Xlib.h>
+#include "X11/keysym.h"
 
 using clock_type = std::chrono::steady_clock;
 
@@ -19,7 +24,7 @@ class Chip {
   std::uint16_t memory_end = 0xFFF;
   std::uint16_t S[16] = {0};
   std::uint8_t V[16] = {0};
-  std::uint16_t I[1] = {0};
+  std::uint16_t I = 0;
   std::uint8_t sound = 0;
   std::uint8_t timer = 0;
   std::uint16_t pc_count = 0;
@@ -44,17 +49,35 @@ class Chip {
     {0xF0, 0x80, 0xF0, 0x80, 0x80}  // F
   };
 
+  std::uint8_t keys[16] = {
+    0x78,// Host X, CHIP 0
+    0x31,// Host 1, CHIP 1
+    0x32,// Host 2, CHIP 2
+    0x33,// Host 3, CHIP 3
+    0x71,// Host Q, CHIP 4 
+    0x77,// Host W, CHIP 5 
+    0x65,// Host E, CHIP 6 
+    0x61,// Host A, CHIP 7 
+    0x73,// Host S, CHIP 8 
+    0x64,// Host D, CHIP 9
+    0x7A,// Host Z, CHIP A
+    0x63,// Host C, CHIP B
+    0x34,// Host 4, CHIP C
+    0x72,// Host R, CHIP D
+    0x66,// Host F, CHIP E
+    0x76// Host V, CHIP F
+  };
+
   //INTERPRETER 
   void set_v (std::uint8_t v, std::size_t i);
   std::uint8_t get_v (std::size_t i);
-  void set_i (std::uint16_t v, std::size_t i);
-  std::uint16_t get_i (std::size_t i);
   void push_stack (std::uint16_t v);
   void pop_stack();
   void rtn_from_subroutine();
   void jump_to (std::uint16_t loc);
   void call_subroutine();
   void start_timer (std::uint8_t time);
+  void print_to_screen(std::uint8_t a[5]);
 
   void test();
 
